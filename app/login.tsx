@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import {
     Image,
     StatusBar,
@@ -10,6 +10,8 @@ import {
 } from "react-native";
 
 export default function Index() {
+  const router = useRouter(); // ✅ Initialize router
+
   return (
     <View style={styles.container}>
       <StatusBar hidden />
@@ -26,7 +28,10 @@ export default function Index() {
       {/* Button Container Fixed from Bottom */}
       <View style={styles.buttonContainer}>
         {/* Sign In Button */}
-        <TouchableOpacity style={[styles.button, styles.shadow]}>
+        <TouchableOpacity
+          style={[styles.button, styles.shadow]}
+          onPress={() => router.push("/signin")} // ✅ Navigate to /signin
+        >
           <LinearGradient
             colors={["#6075FF", "#1433FF"]}
             start={{ x: 0.1, y: 0 }}
@@ -118,7 +123,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 185,
     width: 130,
-    height: 55
+    height: 55,
   },
   signUpButton: {
     position: "absolute",

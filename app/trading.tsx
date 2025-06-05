@@ -81,7 +81,7 @@ export default function Index() {
                             styles.shadow,
                             { right: -15, bottom: 30, position: "absolute" }
                         ]}
-                        onPress={() => router.push("/trading")}
+                        onPress={() => router.push("/login")}
                     >
                         <LinearGradient
                             colors={["#6075FF", "#1433FF"]}
