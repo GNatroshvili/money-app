@@ -81,7 +81,7 @@ export default function Index() {
               styles.shadow,
               { right: -15, bottom: 30, position: "absolute" }
             ]}
-            onPress={() => router.push("/secure")} // ✅ Navigate on button press
+            onPress={() => router.push("/secure")} // ← Redirects to /secure now
           >
             <LinearGradient
               colors={["#6075FF", "#1433FF"]}
@@ -172,8 +172,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 20,
     fontWeight: "400",
-    paddingLeft: 37,
-    paddingRight: 37
   },
   shadow: {
     shadowColor: "#1433FF",
