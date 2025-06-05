@@ -1,18 +1,18 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { Stack, useRouter } from "expo-router";
 import {
-  Dimensions,
-  Image,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
+    Dimensions,
+    Image,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
 } from "react-native";
 
 export default function Index() {
+  const router = useRouter(); // ✅ Add useRouter to enable navigation
   const { height: screenHeight } = Dimensions.get("window");
-  const router = useRouter(); // ✅ Initialize router
 
   const DESIGN_WIDTH = 337;
   const DESIGN_HEIGHT = 367;
@@ -33,7 +33,7 @@ export default function Index() {
           style={styles.logo}
         />
         <Image
-          source={require("../assets/images/saveMoney.png")}
+          source={require("../assets/images/trading.png")}
           resizeMode="cover"
           style={styles.saveMoney}
         />
@@ -59,13 +59,13 @@ export default function Index() {
             }}
           />
           <Text style={[styles.circleTitle, { top: 65 }]}>
-            Save your money conveniently.
+            Enjoy commission-free stock trading.
           </Text>
           <Text style={[styles.circleDescription, { top: 163 }]}>
-            Get 5% cash back for each transaction and spend it easily.
+            Online investing has never been easier than it is right now.
           </Text>
           <Image
-            source={require("../assets/images/Indicator1.png")}
+            source={require("../assets/images/Indicator3.png")}
             resizeMode="contain"
             style={{
               position: "absolute",
@@ -81,7 +81,7 @@ export default function Index() {
               styles.shadow,
               { right: -15, bottom: 30, position: "absolute" }
             ]}
-            onPress={() => router.push("/secure")} // ✅ Navigate on button press
+            onPress={() => router.push("/trading")}
           >
             <LinearGradient
               colors={["#6075FF", "#1433FF"]}
@@ -89,12 +89,7 @@ export default function Index() {
               end={{ x: 0.9, y: 1 }}
               style={styles.gradient}
             >
-              <Text style={styles.buttonText}>Next</Text>
-              <Image
-                source={require("../assets/images/whiteArrow.png")}
-                resizeMode="contain"
-                style={styles.whiteArrow}
-              />
+              <Text style={styles.buttonText}>Get Started</Text>
               <Image
                 source={require("../assets/images/signInButton.png")}
                 resizeMode="cover"
@@ -123,8 +118,8 @@ const styles = StyleSheet.create({
     height: 53,
   },
   saveMoney: {
-    width: 280,
-    height: 202,
+    width: 243,
+    height: 203,
     marginTop: 80,
   },
   textWrapper: {
@@ -137,7 +132,7 @@ const styles = StyleSheet.create({
   circleTitle: {
     position: "absolute",
     left: 20,
-    maxWidth: 227,
+    maxWidth: 298,
     fontWeight: "700",
     fontFamily: "Montserrat",
     fontSize: 25,
@@ -147,7 +142,7 @@ const styles = StyleSheet.create({
   circleDescription: {
     position: "absolute",
     left: 20,
-    maxWidth: 271,
+    maxWidth: 276,
     fontWeight: "400",
     fontFamily: "Montserrat",
     fontSize: 18,
@@ -155,7 +150,7 @@ const styles = StyleSheet.create({
     color: "#2743FD",
   },
   button: {
-    width: 153,
+    width: 189,
     height: 64,
     borderRadius: 28,
     overflow: "hidden",
@@ -172,8 +167,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 20,
     fontWeight: "400",
-    paddingLeft: 37,
-    paddingRight: 37
   },
   shadow: {
     shadowColor: "#1433FF",
@@ -192,7 +185,7 @@ const styles = StyleSheet.create({
   signInButton: {
     position: "absolute",
     top: 0,
-    left: 75,
+    left: 108,
     width: 80,
     height: 55,
   },
