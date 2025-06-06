@@ -1,12 +1,12 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { Stack, useRouter } from "expo-router";
 import {
-    Image,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 export default function Index() {
@@ -53,7 +53,10 @@ export default function Index() {
         </TouchableOpacity>
 
         {/* Sign Up Button */}
-        <TouchableOpacity style={[styles.button, styles.outlinedButton, styles.shadow]}>
+        <TouchableOpacity
+          style={[styles.button, styles.outlinedButton, styles.shadow]}
+          onPress={() => router.push("/signup")}
+        >
           <View style={styles.outlinedContent}>
             <Text style={[styles.buttonText, styles.outlinedText]}>Sign Up</Text>
             <Image
