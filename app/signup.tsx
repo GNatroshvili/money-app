@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
     Dimensions,
@@ -25,6 +25,8 @@ export default function Index() {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [submitAttempted, setSubmitAttempted] = useState(false);
+
+    const router = useRouter();
 
     const isEmailValid = (email: string) =>
         /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
@@ -164,7 +166,12 @@ export default function Index() {
                             {/* Sign Up Button */}
                             <TouchableOpacity
                                 style={[styles.button, styles.shadow]}
-                                onPress={() => setSubmitAttempted(true)}
+                                onPress={() => {
+                                    setSubmitAttempted(true);
+                                    router.push("/verification");
+                                    // if (isEmailValid(email) && password.length > 0) {
+                                    // }
+                                }}
                             >
                                 <LinearGradient
                                     colors={["#6075FF", "#1433FF"]}

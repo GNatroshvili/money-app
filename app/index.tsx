@@ -495,7 +495,7 @@ const onboardingData = [
   },
   {
     key: "2",
-    image: require("../assets/images/secure.png"),
+    image: require("../assets/images/secure.png"), // This one needs custom size
     title: "Secure your money for free and get rewards.",
     description: "Get the most secure payment app ever and enjoy it.",
     indicator: require("../assets/images/Indicator2.png"),
@@ -516,26 +516,22 @@ export default function Onboarding() {
   const textOpacity = useRef(new Animated.Value(1)).current;
   const router = useRouter();
 
-  // Sync the ref with currentIndex state to keep it updated
   useEffect(() => {
     currentIndexRef.current = currentIndex;
   }, [currentIndex]);
 
   const handleNext = () => {
     if (currentIndex < onboardingData.length - 1) {
-      // Fade out text
       Animated.timing(textOpacity, {
         toValue: 0,
         duration: 200,
         easing: Easing.ease,
         useNativeDriver: true,
       }).start(() => {
-        // Change to next slide
         const nextIndex = currentIndex + 1;
         setCurrentIndex(nextIndex);
         imageListRef.current?.scrollToIndex({ index: nextIndex });
 
-        // Fade in new text
         Animated.timing(textOpacity, {
           toValue: 1,
           duration: 200,
@@ -554,7 +550,6 @@ export default function Onboarding() {
         const newIndex = viewableItems[0].index ?? 0;
 
         if (newIndex !== currentIndexRef.current) {
-          // Fade out current text
           Animated.timing(textOpacity, {
             toValue: 0,
             duration: 200,
@@ -564,7 +559,6 @@ export default function Onboarding() {
             setCurrentIndex(newIndex);
             currentIndexRef.current = newIndex;
 
-            // Fade in new text
             Animated.timing(textOpacity, {
               toValue: 1,
               duration: 200,
@@ -584,7 +578,6 @@ export default function Onboarding() {
       <StatusBar hidden />
       <Stack.Screen options={{ headerShown: false }} />
 
-      {/* Fixed Header with Logo */}
       <View style={styles.imageWrapper}>
         <Image
           source={require("../assets/images/logoWithoutText.png")}
@@ -593,7 +586,6 @@ export default function Onboarding() {
         />
       </View>
 
-      {/* Image FlatList - Only for Images */}
       <FlatList
         ref={imageListRef}
         data={onboardingData}
@@ -610,12 +602,15 @@ export default function Onboarding() {
             <Image
               source={item.image}
               resizeMode="cover"
-              style={styles.mainImage}
+              style={[
+                styles.mainImage,
+                item.key === "2" && { width: 187, height: 202 }, // Custom size
+              ]}
             />
           </View>
         )}
       />
-      {/* Fixed Text Content with Opacity Animation */}
+
       <View style={styles.textWrapper}>
         <View style={styles.circleContainer}>
           <Image
@@ -635,6 +630,7 @@ export default function Onboarding() {
               style={styles.indicator}
             />
           </Animated.View>
+
           <TouchableOpacity
             style={[
               styles.button,
@@ -643,7 +639,7 @@ export default function Onboarding() {
               currentIndex === onboardingData.length - 1 && {
                 width: 189,
                 height: 64,
-              }, // Conditional style
+              },
             ]}
             onPress={handleNext}
           >
@@ -655,7 +651,7 @@ export default function Onboarding() {
                 styles.gradient,
                 currentIndex === onboardingData.length - 1 && {
                   borderRadius: 28,
-                }, // Make sure the radius is preserved
+                },
               ]}
             >
               <Text style={styles.buttonText}>
@@ -806,3 +802,4 @@ const styles = StyleSheet.create({
     bottom: 30,
   },
 });
+
