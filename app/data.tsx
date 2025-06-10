@@ -1,131 +1,185 @@
-// import { Stack } from "expo-router";
-// import React, { useState } from "react";
-// import { StatusBar, StyleSheet, Text, View } from "react-native";
-// import { TextInput } from "react-native-paper";
-
-// export default function Input() {
-//   const [value, setValue] = useState("");
-
-//   return (
-//     <View style={styles.container}>
-//       <StatusBar hidden />
-//       <Stack.Screen options={{ headerShown: false }} />
-
-//       {/* Label placed 41px above the input */}
-//       <Text style={styles.label}>Phone Number</Text>
-
-//       <TextInput
-//         mode="flat"
-//         placeholder="Your phone number"
-//         placeholderTextColor="#80E0FF" // This actually won't work directly, will fix below
-//         value={value}
-//         onChangeText={setValue}
-//         underlineColor="#ffffff" // bottom border color
-//         activeUnderlineColor="#ffffff"
-//         style={styles.input}
-//         theme={{
-//           colors: {
-//             placeholder: "#80E0FF", // placeholder text color
-//             text: "#FFFFFF", // input text color (adjust if needed)
-//             primary: "#ffffff", // underline and active colors fallback
-//             background: "#80E0FF", // input background color
-//           },
-//         }}
-//       />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingHorizontal: 24,
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-//   label: {
-//     color: "#80E0FF",
-//     fontSize: 16,
-//     alignSelf: "flex-start",
-//   },
-//   input: {
-//     width: 323,
-//     backgroundColor: "transparent",
-//     fontSize: 16,
-//     height: 40,
-//     paddingHorizontal: 0,
-//   },
-// });
-
+import CompleteButton from "@/components/completeButton";
+import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
-import { Stack } from "expo-router";
-import React from "react";
-import { Image, StatusBar, StyleSheet, View } from "react-native";
-import Input from "../components/input"; // Import the Input component
+import { Stack, useRouter } from "expo-router";
+import React, { useState } from "react";
+import {
+    Image,
+    KeyboardAvoidingView,
+    Platform,
+    StatusBar,
+    StyleSheet,
+    TouchableOpacity,
+    View
+} from "react-native";
+import Input from "../components/input";
 
 export default function HomeScreen() {
-  return (
-    <LinearGradient
-      colors={["#4950F9", "#1937FE"]}
-      start={{ x: 0.1, y: 0 }}
-      end={{ x: 0.9, y: 1 }}
-      style={styles.container}
-    >
-      <StatusBar hidden />
-      <Stack.Screen options={{ headerShown: false }} />
+    const [form, setForm] = useState({
+        username: { value: "", isValid: false },
+        firstName: { value: "", isValid: false },
+        lastName: { value: "", isValid: false },
+        dob: { value: "", isValid: false },
+    });
 
-      <View style={styles.leftArrowWrapper}>
-        <Image
-          source={require("../assets/images/leftArrow.png")}
-          resizeMode="contain"
-          style={styles.leftArrow}
-        />
-      </View>
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-      <Image
-        source={require("../assets/images/imageUploader.png")}
-        resizeMode="contain"
-        style={styles.imageUploader}
-      />
+    const router = useRouter();
 
-      <View style={styles.inputWrapper}>
-        <Input label="username" placeholder="Your username" />
-        <Input label="First Name" placeholder="Your name" />
-        <Input label="Last Name" placeholder="Your last name" />
-        <Input label="Date of Birth" placeholder="Your birthday (dd-mm-yyyy)" />
-      </View>
-    </LinearGradient>
-  );
+    const handleCompletePress = () => {
+        if (allValid) {
+            router.push("/homePage");
+        }
+    };
+
+    const updateField = (field: keyof typeof form, value: string, isValid: boolean) => {
+        setForm((prev) => ({
+            ...prev,
+            [field]: { value, isValid },
+        }));
+    };
+
+    const allValid = Object.values(form).every((f) => f.isValid);
+
+    const handleImagePick = async () => {
+        const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (!permission.granted) {
+            alert("Permission to access media library is required!");
+            return;
+        }
+
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+        });
+
+        if (!result.canceled && result.assets.length > 0) {
+            setSelectedImage(result.assets[0].uri);
+        }
+    };
+
+    return (
+        <LinearGradient
+            colors={["#4950F9", "#1937FE"]}
+            start={{ x: 0.1, y: 0 }}
+            end={{ x: 0.9, y: 1 }}
+            style={styles.container}
+        >
+            <StatusBar hidden />
+            <Stack.Screen options={{ headerShown: false }} />
+
+            <View style={styles.leftArrowWrapper}>
+                <TouchableOpacity onPress={() => router.push("/verify")}>
+                    <Image
+                        source={require("../assets/images/leftArrow.png")}
+                        resizeMode="contain"
+                        style={styles.leftArrow}
+                    />
+                </TouchableOpacity>
+            </View>
+
+            {/* Image uploader */}
+            <TouchableOpacity onPress={handleImagePick}>
+                <Image
+                    source={
+                        selectedImage
+                            ? { uri: selectedImage }
+                            : require("../assets/images/imageUploader.png")
+                    }
+                    resizeMode="cover"
+                    style={styles.imageUploader}
+                />
+            </TouchableOpacity>
+
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={styles.keyboardAvoidContainer}
+                keyboardVerticalOffset={Platform.select({ ios: 100, android: -50 })}
+            >
+                <View style={styles.inputWrapper}>
+                    <Input
+                        label="Username"
+                        placeholder="Your username"
+                        type="text"
+                        value={form.username.value}
+                        onChange={(value, isValid) => updateField("username", value, isValid)}
+                    />
+                    <Input
+                        label="First Name"
+                        placeholder="Your name"
+                        type="text"
+                        value={form.firstName.value}
+                        onChange={(value, isValid) => updateField("firstName", value, isValid)}
+                    />
+                    <Input
+                        label="Last Name"
+                        placeholder="Your last name"
+                        type="text"
+                        value={form.lastName.value}
+                        onChange={(value, isValid) => updateField("lastName", value, isValid)}
+                    />
+                    <Input
+                        label="Date of Birth"
+                        placeholder="dd-mm-yyyy"
+                        type="date"
+                        value={form.dob.value}
+                        onChange={(value, isValid) => updateField("dob", value, isValid)}
+                    />
+                </View>
+            </KeyboardAvoidingView>
+
+            <View style={styles.completeButtonWrapper}>
+                <CompleteButton
+                    text="complete"
+                    disabled={!allValid}
+                    textColor={allValid ? "#2743FD" : "#C8C8C8"}
+                    useBlueMark={allValid}
+                    onPress={handleCompletePress}
+                />
+            </View>
+        </LinearGradient>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 24,
-  },
-  leftArrowWrapper: {
-    position: "absolute",
-    top: 68,
-    left: 30,
-  },
-  leftArrow: {
-    width: 26,
-    height: 21,
-  },
-  imageUploader: {
-    width: 143,
-    height: 143,
-    position: "absolute",
-    top: 84,
-    alignSelf: "center",
-  },
-  inputWrapper: {
-    position: "absolute",
-    top: 260,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    marginTop: 40,
-    gap: 25,
-  },
+    container: {
+        flex: 1,
+    },
+    leftArrowWrapper: {
+        position: "absolute",
+        top: 68,
+        left: 30,
+    },
+    leftArrow: {
+        width: 26,
+        height: 21,
+    },
+    imageUploader: {
+        width: 143,
+        height: 143,
+        borderRadius: 30,
+        position: "absolute",
+        top: 84,
+        alignSelf: "center",
+    },
+    keyboardAvoidContainer: {
+        flex: 1,
+        width: '100%',
+        marginTop: 267,
+    },
+    scrollContainer: {},
+    inputWrapper: {
+        gap: 25,
+        alignItems: "center",
+        paddingHorizontal: 35,
+    },
+    completeButtonWrapper: {
+        position: "absolute",
+        bottom: 75,
+        left: 24,
+        right: 24,
+        alignItems: "center",
+    },
 });
