@@ -28,7 +28,7 @@ export default function HomeScreen() {
 
     const handleCompletePress = () => {
         if (allValid) {
-            router.push("/homePage");
+            router.push("/wallet");
         }
     };
 
