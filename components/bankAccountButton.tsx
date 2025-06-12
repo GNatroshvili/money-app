@@ -1,12 +1,12 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import {
-    Image,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type OtpButtonProps = {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 20,
     fontWeight: "600",
-    maxWidth: 200,
+    maxWidth: 150,
   },
   disabledOverlay: {
     ...StyleSheet.absoluteFillObject,
