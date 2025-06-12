@@ -105,19 +105,17 @@ function LayoutContent() {
   const { width } = useWindowDimensions();
   const menuWidth = 288;
   const contentShiftAmount = 270;
-  
+
   const slideAnim = useRef(new Animated.Value(-menuWidth)).current;
   const mainContentTranslateX = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // Animate burger menu in/out
     Animated.timing(slideAnim, {
       toValue: menuVisible ? 0 : -menuWidth,
       duration: 200,
       useNativeDriver: true,
     }).start();
 
-    // Animate main content shifting right
     Animated.timing(mainContentTranslateX, {
       toValue: menuVisible ? contentShiftAmount : 0,
       duration: 200,
@@ -127,13 +125,11 @@ function LayoutContent() {
 
   return (
     <View style={{ flex: 1 }}>
-      {/* Hide Status Bar */}
       <StatusBar hidden={true} />
 
-      {/* Main Content (Tabs + Content) with Shift Animation */}
-      <Animated.View 
-        style={{ 
-          flex: 1, 
+      <Animated.View
+        style={{
+          flex: 1,
           transform: [{ translateX: mainContentTranslateX }],
           overflow: 'hidden',
         }}
@@ -143,7 +139,7 @@ function LayoutContent() {
             headerShown: false,
             tabBarShowLabel: false,
             tabBarStyle: [
-              styles.tabBar, 
+              styles.tabBar,
               menuVisible && styles.hiddenTabBar
             ],
             tabBarActiveTintColor: "#2B47FC",
@@ -195,36 +191,124 @@ function LayoutContent() {
         </Tabs>
       </Animated.View>
 
-      {/* Overlay that covers entire screen */}
       {menuVisible && (
         <TouchableOpacity
           style={StyleSheet.absoluteFill}
           activeOpacity={1}
           onPress={closeMenu}
         >
-          <Animated.View 
+          <Animated.View
             style={[
-              styles.overlay, 
+              styles.overlay,
               { opacity: menuVisible ? 0.3 : 0 }
-            ]} 
+            ]}
           />
         </TouchableOpacity>
       )}
-      
-      {/* Side Menu */}
+
       <Animated.View style={[
-        styles.sideMenu, 
-        { 
+        styles.sideMenu,
+        {
           transform: [{ translateX: slideAnim }],
           width: menuWidth,
         }
       ]}>
-        <TouchableOpacity onPress={closeMenu}>
-          <Text style={styles.closeText}>Close</Text>
+        <View style={styles.userDataWrapper}>
+          <View>
+            <Image
+              source={require("../../assets/images/profilePicture.png")}
+              style={styles.profileImage}
+            />
+          </View>
+          <View>
+            <Text style={styles.name}>Charles Leclerc</Text>
+            <Text style={styles.userName}>@ScuderiaFerrari</Text>
+          </View>
+        </View>
+        <View style={styles.menuItems}>
+          <View style={styles.menuItemWrapper}>
+            <View style={styles.leftSide}>
+              <Image
+                source={require("../../assets/images/payments.png")}
+                style={styles.walletIcon}
+              />
+              <Text style={styles.menuItem}>Payments</Text>
+            </View>
+            <View style={styles.rightSide}>
+              <Image
+                source={require("../../assets/images/blueRight.png")}
+                style={styles.blueArrow}
+              />
+            </View>
+          </View>
+          <View style={styles.menuItemWrapper}>
+            <View style={styles.leftSide}>
+              <Image
+                source={require("../../assets/images/transactions.png")}
+                style={styles.transactionsIcon}
+              />
+              <Text style={styles.menuItem}>Transactions</Text>
+            </View>
+            <View style={styles.rightSide}>
+              <Image
+                source={require("../../assets/images/blueRight.png")}
+                style={styles.blueArrow}
+              />
+            </View>
+          </View>
+          <View style={styles.menuItemWrapper}>
+            <View style={styles.leftSide}>
+              <Image
+                source={require("../../assets/images/cards.png")}
+                style={styles.CardsIcon}
+              />
+              <Text style={styles.menuItem}>My Cards</Text>
+            </View>
+            <View style={styles.rightSide}>
+              <Image
+                source={require("../../assets/images/blueRight.png")}
+                style={styles.blueArrow}
+              />
+            </View>
+          </View>
+          <View style={styles.menuItemWrapper}>
+            <View style={styles.leftSide}>
+              <Image
+                source={require("../../assets/images/promotions.png")}
+                style={styles.promotionsIcon}
+              />
+              <Text style={styles.menuItem}>Promotions</Text>
+            </View>
+            <View style={styles.rightSide}>
+              <Image
+                source={require("../../assets/images/blueRight.png")}
+                style={styles.blueArrow}
+              />
+            </View>
+          </View>
+          <View style={styles.menuItemWrapper}>
+            <View style={styles.leftSide}>
+              <Image
+                source={require("../../assets/images/savings.png")}
+                style={styles.savingsIcon}
+              />
+              <Text style={styles.menuItem}>Savings</Text>
+            </View>
+            <View style={styles.rightSide}>
+              <Image
+                source={require("../../assets/images/blueRight.png")}
+                style={styles.blueArrow}
+              />
+            </View>
+          </View>
+        </View>
+        <TouchableOpacity style={styles.closeWrapper} onPress={closeMenu}>
+          <Text style={styles.close}>Sign Out</Text>
+          <Image
+            source={require("../../assets/images/logout.png")}
+            style={styles.logOutIcon}
+          />
         </TouchableOpacity>
-        <Text style={styles.menuItem}>Home</Text>
-        <Text style={styles.menuItem}>Profile</Text>
-        <Text style={styles.menuItem}>Settings</Text>
       </Animated.View>
     </View>
   );
@@ -250,20 +334,38 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: "#FFFFFF",
     zIndex: 30,
-    padding: 20,
+    padding: 32,
     elevation: 6,
     borderTopRightRadius: 20,
     borderBottomRightRadius: 20
   },
-  closeText: {
+  closeWrapper: {
+    position: "absolute",
+    bottom: 81,
+    left: 32,
+    right: 32,
+    borderWidth: 1,
+    borderColor: "#556BFF",
+    borderRadius: 28,
+    alignItems: 'center',
+    flexDirection: "row",
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 24,
+    paddingRight: 24,
+    justifyContent: "space-between",
+    backgroundColor: "#FFFFFF"
+  },
+  close: {
     fontSize: 18,
-    fontWeight: "600",
-    marginBottom: 20,
+    fontWeight: "400",
+    fontFamily: "Montserrat",
+    color: "#556BFF"
   },
   menuItem: {
-    fontSize: 16,
-    paddingVertical: 12,
+    fontSize: 18,
     fontWeight: "400",
+    color: "#2B47FC",
   },
   tabIcon: {
     width: 26,
@@ -277,4 +379,72 @@ const styles = StyleSheet.create({
     width: 21,
     height: 25,
   },
+  menuItemWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
+  },
+  walletIcon: {
+    width: 18,
+    height: 18
+  },
+  transactionsIcon: {
+    width: 11,
+    height: 15
+  },
+  CardsIcon: {
+    width: 19,
+    height: 15
+  },
+  promotionsIcon: {
+    width: 20,
+    height: 20
+  },
+  savingsIcon: {
+    width: 18,
+    height: 21
+  },
+  menuItems: {
+    gap: 50,
+    marginTop: 50
+  },
+  leftSide: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8
+  },
+  rightSide: {
+    alignItems: "center",
+  },
+  blueArrow: {
+    width: 7,
+    height: 12
+  },
+  logOutIcon: {
+    width: 21,
+    height: 20
+  },
+  userDataWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    marginTop: 36
+  },
+  profileImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 1,
+  },
+  name: {
+    fontFamily: "Montserrat",
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#000000",
+  },
+  userName: {
+    fontFamily: "Montserrat",
+    fontSize: 15,
+    fontWeight: "400",
+    color: "#000000",
+  }
 });
