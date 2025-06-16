@@ -18,7 +18,7 @@ export const ImageSlider = [
         number: "**** **** **** 1695",
         image: require('../assets/images/masterCard.png'),
         icon: require('../assets/images/masterCardLogo.png'),
-        backgroundColor: '#8A2BE2',
+        backgroundColor: '#40D3F2',
         color: "#fff",
     },
     {
