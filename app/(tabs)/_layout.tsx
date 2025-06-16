@@ -87,9 +87,19 @@
 
 
 
+import { useRouter } from "expo-router";
 import { Tabs } from "expo-router/tabs";
 import React, { useEffect, useRef } from "react";
-import { Animated, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View, useWindowDimensions } from "react-native";
+import {
+  Animated,
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import { MenuProvider, useMenu } from './context/MenuContext';
 
 export default function RootLayout() {
@@ -105,6 +115,7 @@ function LayoutContent() {
   const { width } = useWindowDimensions();
   const menuWidth = 288;
   const contentShiftAmount = 270;
+  const router = useRouter();
 
   const slideAnim = useRef(new Animated.Value(-menuWidth)).current;
   const mainContentTranslateX = useRef(new Animated.Value(0)).current;
@@ -140,7 +151,7 @@ function LayoutContent() {
             tabBarShowLabel: false,
             tabBarStyle: [
               styles.tabBar,
-              menuVisible && styles.hiddenTabBar
+              menuVisible && styles.hiddenTabBar,
             ],
             tabBarActiveTintColor: "#2B47FC",
             tabBarInactiveTintColor: "#3A3A3A",
@@ -200,19 +211,21 @@ function LayoutContent() {
           <Animated.View
             style={[
               styles.overlay,
-              { opacity: menuVisible ? 0.3 : 0 }
+              { opacity: menuVisible ? 0.3 : 0 },
             ]}
           />
         </TouchableOpacity>
       )}
 
-      <Animated.View style={[
-        styles.sideMenu,
-        {
-          transform: [{ translateX: slideAnim }],
-          width: menuWidth,
-        }
-      ]}>
+      <Animated.View
+        style={[
+          styles.sideMenu,
+          {
+            transform: [{ translateX: slideAnim }],
+            width: menuWidth,
+          },
+        ]}
+      >
         <View style={styles.userDataWrapper}>
           <View>
             <Image
@@ -225,6 +238,7 @@ function LayoutContent() {
             <Text style={styles.userName}>@ScuderiaFerrari</Text>
           </View>
         </View>
+
         <View style={styles.menuItems}>
           <View style={styles.menuItemWrapper}>
             <View style={styles.leftSide}>
@@ -241,6 +255,7 @@ function LayoutContent() {
               />
             </View>
           </View>
+
           <View style={styles.menuItemWrapper}>
             <View style={styles.leftSide}>
               <Image
@@ -256,7 +271,15 @@ function LayoutContent() {
               />
             </View>
           </View>
-          <View style={styles.menuItemWrapper}>
+
+          {/* ✅ Updated My Cards Item to Navigate */}
+          <TouchableOpacity
+            style={styles.menuItemWrapper}
+            onPress={() => {
+              closeMenu();
+              router.push("/cards");
+            }}
+          >
             <View style={styles.leftSide}>
               <Image
                 source={require("../../assets/images/cards.png")}
@@ -270,7 +293,8 @@ function LayoutContent() {
                 style={styles.blueArrow}
               />
             </View>
-          </View>
+          </TouchableOpacity>
+
           <View style={styles.menuItemWrapper}>
             <View style={styles.leftSide}>
               <Image
@@ -286,6 +310,7 @@ function LayoutContent() {
               />
             </View>
           </View>
+
           <View style={styles.menuItemWrapper}>
             <View style={styles.leftSide}>
               <Image
@@ -302,6 +327,7 @@ function LayoutContent() {
             </View>
           </View>
         </View>
+
         <TouchableOpacity style={styles.closeWrapper} onPress={closeMenu}>
           <Text style={styles.close}>Sign Out</Text>
           <Image
@@ -337,7 +363,7 @@ const styles = StyleSheet.create({
     padding: 32,
     elevation: 6,
     borderTopRightRadius: 20,
-    borderBottomRightRadius: 20
+    borderBottomRightRadius: 20,
   },
   closeWrapper: {
     position: "absolute",
@@ -354,13 +380,13 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
     paddingRight: 24,
     justifyContent: "space-between",
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
   },
   close: {
     fontSize: 18,
     fontWeight: "400",
     fontFamily: "Montserrat",
-    color: "#556BFF"
+    color: "#556BFF",
   },
   menuItem: {
     fontSize: 18,
@@ -382,53 +408,54 @@ const styles = StyleSheet.create({
   menuItemWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginBottom: 20,
   },
   walletIcon: {
     width: 18,
-    height: 18
+    height: 18,
   },
   transactionsIcon: {
     width: 11,
-    height: 15
+    height: 15,
   },
   CardsIcon: {
     width: 19,
-    height: 15
+    height: 15,
   },
   promotionsIcon: {
     width: 20,
-    height: 20
+    height: 20,
   },
   savingsIcon: {
     width: 18,
-    height: 21
+    height: 21,
   },
   menuItems: {
-    gap: 50,
-    marginTop: 50
+    gap: 30,
+    marginTop: 50,
   },
   leftSide: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8
+    gap: 8,
   },
   rightSide: {
     alignItems: "center",
   },
   blueArrow: {
     width: 7,
-    height: 12
+    height: 12,
   },
   logOutIcon: {
     width: 21,
-    height: 20
+    height: 20,
   },
   userDataWrapper: {
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    marginTop: 36
+    marginTop: 36,
   },
   profileImage: {
     width: 50,
@@ -446,5 +473,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "400",
     color: "#000000",
-  }
+  },
 });
+

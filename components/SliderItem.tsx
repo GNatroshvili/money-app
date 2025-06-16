@@ -9,43 +9,34 @@
 
 // const { width, height } = Dimensions.get('screen');
 
-// const SliderItem = ({ item, index }: Props) => {
+// const SliderItem = ({ item }: Props) => {
 //     return (
 //         <View style={styles.fullscreenWrapper}>
 //             <View style={styles.container}>
 //                 <View
 //                     style={[
 //                         styles.itemWrapper,
-//                         { backgroundColor: item.backgroundColor || '#fff' }
+//                         { backgroundColor: item.backgroundColor || '#fff' },
 //                     ]}
 //                 >
-//                     <View style={styles.topWrapper}>
-//                         <Text style={[
-//                             styles.balance,
-//                             { color: item.color || '#fff' }
-//                         ]}>{item.balance}
+//                     <View>
+//                         <Text style={[styles.balance, { color: item.color || '#fff' }]}>
+//                             {item.balance}
 //                         </Text>
-//                         <Text
-//                             style={[
-//                                 styles.title,
-//                                 { color: item.color || '#fff' }
-//                             ]}>{item.title}
+//                         <Text style={[styles.title, { color: item.color || '#fff' }]}>
+//                             {item.title}
 //                         </Text>
 //                     </View>
 //                     <View style={styles.downWrapper}>
-//                         <View style={styles.leftSide}>
-//                             <Text style={[
-//                                 styles.expire,
-//                                 { color: item.color || '#fff' }
-//                             ]}>{item.expire}
+//                         <View>
+//                             <Text style={[styles.expire, { color: item.color || '#fff' }]}>
+//                                 {item.expire}
 //                             </Text>
-//                             <Text style={[
-//                                 styles.number,
-//                                 { color: item.color || '#fff' }
-//                             ]} >{item.number}
+//                             <Text style={[styles.number, { color: item.color || '#fff' }]}>
+//                                 {item.number}
 //                             </Text>
 //                         </View>
-//                         <View style={styles.rightSide}>
+//                         <View>
 //                             <Image style={styles.icon} source={item.icon} />
 //                         </View>
 //                     </View>
@@ -78,8 +69,11 @@
 //         width: 209,
 //         height: 305,
 //         borderRadius: 25,
-//         alignItems: 'center',
-//         justifyContent: 'center',
+//         paddingBottom: 32,
+//         paddingTop: 32,
+//         paddingLeft: 20,
+//         paddingRight: 20,
+//         justifyContent: 'space-between',
 //     },
 //     balance: {
 //         fontSize: 24,
@@ -92,93 +86,98 @@
 //     number: {
 //         fontSize: 14,
 //         fontWeight: '400',
-//     },
-//     topWrapper: {
-
+//         marginTop: 8
 //     },
 //     downWrapper: {
-//         flexDirection: "row",
-//         justifyContent: "space-between"
-//     },
-//     leftSide: {
-
-//     },
-//     rightSide: {
-
+//         flexDirection: 'row',
+//         justifyContent: 'space-between',
+//         alignItems: 'center'
 //     },
 //     icon: {
 //         width: 40,
-//         height: 33
-//     }
+//         height: 33,
+//         resizeMode: 'contain',
+//     },
 // });
-
-
-
-
 
 
 import { ImageSliderType } from '@/data/SliderData';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import Animated, { Extrapolation, interpolate, SharedValue, useAnimatedStyle } from 'react-native-reanimated';
 
 type Props = {
     item: ImageSliderType;
-    index: number;
+    scrollX: SharedValue<number>;
+    index: number
 };
 
-const { width, height } = Dimensions.get('screen');
+const { width } = Dimensions.get('window');
 
-const SliderItem = ({ item }: Props) => {
+const SliderItem = ({ item, index, scrollX }: Props) => {
+    const rnAnimatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [
+                {
+                    translateX: interpolate(
+                        scrollX.value,
+                        [(index - 1) * width, index * width, (index + 1) * width],
+                        [-width * 0.25, 0, width * 0.25],
+                        Extrapolation.CLAMP
+                    ),
+                },
+                {
+                    scale: interpolate(
+                        scrollX.value,
+                        [(index - 1) * width, index * width, (index + 1) * width],
+                        [0.75, 1, 0.75],
+                        Extrapolation.CLAMP
+                    ),
+                }
+            ]
+        }
+    });
     return (
-        <View style={styles.fullscreenWrapper}>
-            <View style={styles.container}>
-                <View
-                    style={[
-                        styles.itemWrapper,
-                        { backgroundColor: item.backgroundColor || '#fff' },
-                    ]}
-                >
+        <Animated.View style={[styles.container, rnAnimatedStyle]}>
+            <View
+                style={[
+                    styles.itemWrapper,
+                    { backgroundColor: item.backgroundColor || '#fff' },
+                ]}
+            >
+                <View>
+                    <Text style={[styles.balance, { color: item.color || '#fff' }]}>
+                        {item.balance}
+                    </Text>
+                    <Text style={[styles.title, { color: item.color || '#fff' }]}>
+                        {item.title}
+                    </Text>
+                </View>
+                <View style={styles.downWrapper}>
                     <View>
-                        <Text style={[styles.balance, { color: item.color || '#fff' }]}>
-                            {item.balance}
+                        <Text style={[styles.expire, { color: item.color || '#fff' }]}>
+                            {item.expire}
                         </Text>
-                        <Text style={[styles.title, { color: item.color || '#fff' }]}>
-                            {item.title}
+                        <Text style={[styles.number, { color: item.color || '#fff' }]}>
+                            {item.number}
                         </Text>
                     </View>
-                    <View style={styles.downWrapper}>
-                        <View>
-                            <Text style={[styles.expire, { color: item.color || '#fff' }]}>
-                                {item.expire}
-                            </Text>
-                            <Text style={[styles.number, { color: item.color || '#fff' }]}>
-                                {item.number}
-                            </Text>
-                        </View>
-                        <View>
-                            <Image style={styles.icon} source={item.icon} />
-                        </View>
+                    <View>
+                        <Image style={styles.icon} source={item.icon} />
                     </View>
                 </View>
             </View>
-        </View>
+        </Animated.View>
     );
 };
 
 export default SliderItem;
 
 const styles = StyleSheet.create({
-    fullscreenWrapper: {
-        width,
-        height,
-        position: 'relative',
-    },
     container: {
-        padding: 16,
-        borderRadius: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 25,
+        width: width,
+        paddingHorizontal: 16,
+        alignItems: "center"
     },
     title: {
         fontSize: 16,
