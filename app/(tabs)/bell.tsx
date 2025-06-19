@@ -7,7 +7,7 @@ export default function NotificationsScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.inputWrapper}>
-        <SearchInput />
+        <SearchInput variant="white"/>
       </View>
       <View style={styles.titleWrapper}>
         <Text style={styles.title}>You can check your notifications here.</Text>

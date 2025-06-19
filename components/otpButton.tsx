@@ -56,7 +56,7 @@ export default function OtpButton({ text, onPress, disabled = false }: OtpButton
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    paddingHorizontal: 24,
+    // paddingHorizontal: 24,
   },
   button: {
     width: 315,

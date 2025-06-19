@@ -640,8 +640,16 @@
 import BankAccountButton from "@/components/bankAccountButton";
 import { LinearGradient } from "expo-linear-gradient";
 import { Stack } from "expo-router";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useMenu } from './context/MenuContext';
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('screen');
+
+const dynamicHeight = screenHeight / 3;
+const dynamicTop = screenHeight / 3.6;
+const dynamicImageHeight = screenHeight / 3.4;
+const dynamicImageWidth = screenWidth / 2.35;
+const dynamicMarginTop3 = screenHeight / 3.2; 
 
 export default function Notifications() {
     const { toggleMenu } = useMenu();
@@ -703,7 +711,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
-        height: 278,
+        height: dynamicHeight,
         justifyContent: "center",
         alignItems: "center",
         paddingTop: 50,
@@ -755,7 +763,7 @@ const styles = StyleSheet.create({
     },
     balanceCard: {
         position: "absolute",
-        top: 238,
+        top: dynamicTop,
         borderRadius: 40,
         backgroundColor: "#FFFFFF",
         padding: 32,

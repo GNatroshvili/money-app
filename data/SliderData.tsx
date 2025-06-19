@@ -6,7 +6,7 @@ export type ImageSliderType = {
     image: any;
     icon?: any;
     backgroundColor?: string; // <- add this
-    color?: string
+    color?: string,
 };
 
 

@@ -1,42 +1,3 @@
-// import Slider from '@/components/Slider';
-// import { ImageSlider } from '@/data/SliderData';
-// import React from 'react';
-// import { Dimensions, StyleSheet, View } from 'react-native';
-
-// const { width: screenWidth } = Dimensions.get('window');
-
-// export default function Cards() {
-//     return (
-//         <View style={styles.screen}>
-//             <View style={styles.container}>
-//                 <View style={styles.sliderWrapper}>
-//                     <Slider itemList={ImageSlider}/>
-//                 </View>
-//             </View>
-//         </View>
-//     );
-// }
-
-// const styles = StyleSheet.create({
-//     screen: {
-//         flex: 1,
-//         backgroundColor: '#F5F5F5',
-//         marginBottom: 200
-//     },
-//     container: {
-//         backgroundColor: '#1937FE',
-//         width: screenWidth,
-//         height: 293,
-//         borderBottomLeftRadius: 65,
-//         borderBottomRightRadius: 65,
-//         paddingTop: 208,        
-//     },
-//     sliderWrapper: {
-//         // This ensures proper placement of the slider 70px down
-//         flex: 1,
-//     },
-// });
-
 import Slider from '@/components/Slider';
 import TransactionCategory from '@/components/transactionCategory';
 import { ImageSlider } from '@/data/SliderData';
@@ -44,14 +5,17 @@ import React from 'react';
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('screen');
-const containerHeight = screenHeight / 3;
+const containerHeight = screenHeight / 3.1;
 
 export default function Cards() {
     const gapValue = screenHeight < 800 ? 10 : 20;
+    const categoryMarginTop = screenHeight < 800 ? 10 : 20;
+    const categoryMarginBottom = screenHeight < 800 ? 16 : 31;
+    const titleWrapperTop = screenHeight / 12.5;
 
     return (
         <View style={styles.screen}>
-            <View style={styles.titleWrapper}>
+            <View style={[styles.titleWrapper, { top: titleWrapperTop }]}>
                 <Image
                     source={require("../assets/images/leftArrow.png")}
                     resizeMode="cover"
@@ -74,30 +38,41 @@ export default function Cards() {
                 </Text>
             </View>
 
-            <View style={[styles.categoryWrapper, { gap: gapValue }]}>
+            <View style={[
+                styles.categoryWrapper,
+                {
+                    gap: gapValue,
+                    marginTop: categoryMarginTop,
+                    marginBottom: categoryMarginBottom,
+                }
+            ]}>
                 <TransactionCategory
                     title="Shopping"
                     date="15 Mar 2025, 15:00 PM"
                     price="-120$"
                     category="shopping"
+                    variant={1}
                 />
                 <TransactionCategory
                     title="medicine"
                     date="15 Mar 2025, 15:00 PM"
                     price="-120$"
                     category="medicine"
+                    variant={1}
                 />
                 <TransactionCategory
                     title="sport"
                     date="15 Mar 2025, 15:00 PM"
                     price="-120$"
                     category="sport"
+                    variant={1}
                 />
                 <TransactionCategory
                     title="travel"
                     date="15 Mar 2025, 15:00 PM"
                     price="-120$"
                     category="travel"
+                    variant={1}
                 />
             </View>
         </View>
@@ -129,7 +104,6 @@ const styles = StyleSheet.create({
     },
     titleWrapper: {
         position: 'absolute',
-        top: 68,
         left: 30,
         zIndex: 1,
     },
@@ -142,8 +116,6 @@ const styles = StyleSheet.create({
         marginTop: 32,
     },
     categoryWrapper: {
-        marginBottom: 31,
-        marginTop: 20,
     },
     transactionTitle: {
         fontSize: 22,

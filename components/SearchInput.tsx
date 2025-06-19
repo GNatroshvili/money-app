@@ -1,20 +1,49 @@
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, TextInput, TextInputProps, View } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  TextInputProps,
+  TextStyle,
+  View,
+  ViewStyle,
+} from "react-native";
 
-const SearchInput: React.FC<TextInputProps> = (props) => {
+type Variant = "white" | "blue";
+
+interface SearchInputProps extends TextInputProps {
+  variant?: Variant;
+}
+
+const SearchInput: React.FC<SearchInputProps> = ({ variant = "white", ...props }) => {
+  const isBlue = variant === "blue";
+
+  const containerStyle: ViewStyle = {
+    ...styles.container,
+    backgroundColor: isBlue ? "#05199E" : "#F5F6FA",
+  };
+
+  const inputStyle: TextStyle = {
+    ...styles.input,
+    color: isBlue ? "#80E0FF" : "#1A5CFF",
+  };
+
+  const placeholderTextColor = isBlue ? "#80E0FF" : "#1A5CFF";
+
+  const iconColor = isBlue ? "#80E0FF" : "#1A5CFF";
+
   return (
-    <View style={styles.container}>
+    <View style={containerStyle}>
       <Ionicons
         name="search-outline"
         size={20}
-        color="#1A5CFF"
+        color={iconColor}
         style={styles.icon}
       />
       <TextInput
-        style={styles.input}
+        style={inputStyle}
         placeholder="Search"
-        placeholderTextColor="#1A5CFF"
+        placeholderTextColor={placeholderTextColor}
         {...props}
       />
     </View>
@@ -27,7 +56,6 @@ const styles = StyleSheet.create({
     height: 45,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#F5F6FA",
     borderRadius: 12,
     paddingHorizontal: 12,
   },
@@ -37,14 +65,6 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 16,
-    color: "#1A5CFF",
-  },
-  titleWrapper: {},
-  title: {
-    fontSize: 24,
-    fontWeight: "700",
-    fontFamily: "Montserrat",
-    color: "#3A3A3A",
   },
 });
 

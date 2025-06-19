@@ -97,12 +97,12 @@
 
 import React from "react";
 import {
-    Image,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 type OtpButtonProps = {
@@ -154,7 +154,7 @@ export default function CompleteButton({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24,
+    // paddingHorizontal: 24,
   },
   button: {
     width: 315,

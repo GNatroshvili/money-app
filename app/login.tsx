@@ -1,23 +1,30 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { Stack, useRouter } from "expo-router";
 import {
+  Dimensions,
   Image,
   StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 
+const { width: screenWidth, height: screenHeight } = Dimensions.get("screen");
+
 export default function Index() {
-  const router = useRouter(); // ✅ Initialize router
+  const router = useRouter();
+
+  const isSmallScreen = screenHeight < 700;
+  const dynamicCardHeight = isSmallScreen ? screenHeight / 1.45 : screenHeight / 1.7;
+  const dynamicButtonBottom = isSmallScreen ? 25 : 75;
 
   return (
     <View style={styles.container}>
       <StatusBar hidden />
       <Stack.Screen options={{ headerShown: false }} />
 
-      <View style={styles.imageWrapper}>
+      <View style={[styles.imageWrapper, { height: dynamicCardHeight }]}>
         <Image
           source={require("../assets/images/signIn.png")}
           resizeMode="cover"
@@ -26,11 +33,11 @@ export default function Index() {
       </View>
 
       {/* Button Container Fixed from Bottom */}
-      <View style={styles.buttonContainer}>
+      <View style={[styles.buttonContainer, { bottom: dynamicButtonBottom }]}>
         {/* Sign In Button */}
         <TouchableOpacity
           style={[styles.button, styles.shadow]}
-          onPress={() => router.push("/signin")} // ✅ Navigate to /signin
+          onPress={() => router.push("/signin")}
         >
           <LinearGradient
             colors={["#6075FF", "#1433FF"]}
@@ -84,8 +91,7 @@ const styles = StyleSheet.create({
     position: "relative",
   },
   imageWrapper: {
-    width: "100%",
-    height: 501,
+    width: screenWidth,
   },
   image: {
     width: "100%",
@@ -93,7 +99,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: "absolute",
-    bottom: 75,
     alignItems: "center",
   },
   button: {
@@ -161,6 +166,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.2,
     shadowRadius: 10,
-    elevation: 8, // for Android
+    elevation: 8,
   },
 });

@@ -14,6 +14,7 @@ type Props = {
     date: string;
     price: string;
     category: CategoryType;
+    variant?: 1 | 2;
 };
 
 const categoryAssets: Record<CategoryType, { icon: any; backgroundColor: string }> = {
@@ -35,8 +36,32 @@ const categoryAssets: Record<CategoryType, { icon: any; backgroundColor: string 
     },
 };
 
-export default function TransactionCategory({ title, date, price, category }: Props) {
+export default function TransactionCategory({
+    title,
+    date,
+    price,
+    category,
+    variant = 1,
+}: Props) {
     const { icon, backgroundColor } = categoryAssets[category];
+
+    const titleStyle = [
+        styles.title,
+        variant === 2 && { color: '#FFFFFF' },
+    ];
+    const dateStyle = [
+        styles.date,
+        variant === 2 && { color: '#80E0FF' },
+    ];
+    const priceStyle = [
+        styles.price,
+        variant === 2 && { color: '#FFFFFF' },
+    ];
+
+    const arrowIcon =
+        variant === 2
+            ? require("../assets/images/aquaArrow.png")
+            : require("../assets/images/transactionsIcon.png");
 
     return (
         <View style={styles.container}>
@@ -50,14 +75,26 @@ export default function TransactionCategory({ title, date, price, category }: Pr
                     />
                 </View>
                 <View style={styles.textWrapper}>
-                    <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.date}>{date}</Text>
+                    <Text
+                        style={titleStyle}
+                        numberOfLines={1}
+                        adjustsFontSizeToFit
+                    >
+                        {title}
+                    </Text>
+                    <Text
+                        style={dateStyle}
+                        numberOfLines={1}
+                        adjustsFontSizeToFit
+                    >
+                        {date}
+                    </Text>
                 </View>
             </View>
             <View style={styles.priceWrapper}>
-                <Text style={styles.price}>{price}</Text>
+                <Text style={priceStyle}>{price}</Text>
                 <Image
-                    source={require("../assets/images/transactionsIcon.png")}
+                    source={arrowIcon}
                     resizeMode="contain"
                     style={styles.arrow}
                 />
@@ -72,12 +109,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 25,
-        backgroundColor: 'transparent',
-        shadowColor: 'transparent',  
-        shadowOffset: { width: 0, height: 0 },
-        shadowOpacity: 0,
-        shadowRadius: 0,
-        elevation: 0,
     },
     imageWrapper: {
         width: 40,
@@ -115,7 +146,6 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         color: '#000000',
         fontFamily: 'Montserrat',
-
     },
     arrow: {
         width: 7,
@@ -124,5 +154,7 @@ const styles = StyleSheet.create({
     leftSide: {
         flexDirection: 'row',
         gap: 10,
-    }
+        alignItems: 'center',
+        flexShrink: 1,
+    },
 });

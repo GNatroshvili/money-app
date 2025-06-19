@@ -118,6 +118,8 @@ type Props = {
 };
 
 const { width } = Dimensions.get('window');
+const { height: screenHeight } = Dimensions.get('screen');
+const cardHeight = screenHeight / 3.1;
 
 const SliderItem = ({ item, index, scrollX }: Props) => {
   const rnAnimatedStyle = useAnimatedStyle(() => {
@@ -135,7 +137,7 @@ const SliderItem = ({ item, index, scrollX }: Props) => {
           scale: interpolate(
             scrollX.value,
             [(index - 1) * width, index * width, (index + 1) * width],
-            [0.75, 1, 0.75],
+            [0.85, 1, 0.85],
             Extrapolation.CLAMP
           ),
         },
@@ -181,7 +183,7 @@ export default SliderItem;
 
 const styles = StyleSheet.create({
   container: {
-    width: width - 40,
+    width: width - 30,
     alignItems: 'center',
   },
   title: {
@@ -190,7 +192,7 @@ const styles = StyleSheet.create({
   },
   itemWrapper: {
     width: 209,
-    height: 305,
+    height: cardHeight,
     borderRadius: 25,
     paddingBottom: 32,
     paddingTop: 32,
