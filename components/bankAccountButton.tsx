@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   leftCircles: {
     position: "absolute",
     top: 0,
-    left: 185,
+    right: 0,
     width: 130,
     height: 125,
     zIndex: 0,

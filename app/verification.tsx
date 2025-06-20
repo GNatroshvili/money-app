@@ -15,7 +15,7 @@
 // const dynamicMarginTop5 = screenHeight / 8.5;
 
 // export default function Verification() {
-//   const router = useRouter(); 
+//   const router = useRouter();
 
 //   return (
 //     <PaperProvider>
@@ -135,7 +135,7 @@ import {
 import { Provider as PaperProvider, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get('screen');
+const { width: screenWidth, height: screenHeight } = Dimensions.get("screen");
 
 const dynamicHeight = screenHeight / 3.15;
 const dynamicWidth = screenWidth / 1.5;
@@ -151,7 +151,8 @@ export default function Verification() {
   const contentTranslateY = useRef(new Animated.Value(0)).current;
 
   const slideUp = (keyboardHeight: number) => {
-    const offset = Platform.OS === 'ios' ? keyboardHeight * 0.4 : keyboardHeight * 0.8;
+    const offset =
+      Platform.OS === "ios" ? keyboardHeight * 0.8 : keyboardHeight * 0.8;
     Animated.timing(contentTranslateY, {
       toValue: -offset,
       duration: 300,
@@ -169,13 +170,13 @@ export default function Verification() {
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
+      "keyboardDidShow",
       (e) => {
         slideUp(e.endCoordinates.height);
       }
     );
     const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
+      "keyboardDidHide",
       () => {
         slideDown();
       }
@@ -194,16 +195,22 @@ export default function Verification() {
 
   return (
     <PaperProvider>
-      <TouchableWithoutFeedback onPress={dismissKeyboardAndSlideDown} accessible={false}>
+      <TouchableWithoutFeedback
+        onPress={dismissKeyboardAndSlideDown}
+        accessible={false}
+      >
         <SafeAreaView
           style={styles.container}
-          edges={["bottom", "left", "right"]} 
+          edges={["bottom", "left", "right"]}
         >
           <StatusBar hidden />
           <Stack.Screen options={{ headerShown: false }} />
 
-          <Animated.View 
-            style={[styles.animatedScreenContent, { transform: [{ translateY: contentTranslateY }] }]}
+          <Animated.View
+            style={[
+              styles.animatedScreenContent,
+              { transform: [{ translateY: contentTranslateY }] },
+            ]}
           >
             <View>
               <Image
@@ -233,7 +240,10 @@ export default function Verification() {
               </View>
 
               <View style={styles.buttonWrapper}>
-                <OtpButton text="Get OTP" onPress={() => router.push("/verify")} />
+                <OtpButton
+                  text="Get OTP"
+                  onPress={() => router.push("/verify")}
+                />
               </View>
             </View>
           </Animated.View>
@@ -249,8 +259,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   animatedScreenContent: {
-    flex: 1, 
-    width: '100%',
+    flex: 1,
+    width: "100%",
   },
   image: {
     width: dynamicWidth,
@@ -261,7 +271,7 @@ const styles = StyleSheet.create({
   actionsWrapper: {
     marginTop: dynamicMarginTop2,
     paddingHorizontal: 24,
-    flex: 1, 
+    flex: 1,
   },
   title: {
     fontSize: 24,

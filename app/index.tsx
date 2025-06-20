@@ -479,11 +479,17 @@ import {
 
 const { height: screenHeight, width: screenWidth } = Dimensions.get("window");
 
-const DESIGN_WIDTH = 337;
-const DESIGN_HEIGHT = 367;
-const calculatedHeight = screenHeight - 475;
-const scaleFactor = calculatedHeight / DESIGN_HEIGHT;
-const calculatedWidth = DESIGN_WIDTH * scaleFactor;
+// const DESIGN_WIDTH = 337;
+// const DESIGN_HEIGHT = 367;
+// const calculatedHeight = screenHeight - 475;
+// const scaleFactor = calculatedHeight / DESIGN_HEIGHT;
+// const calculatedWidth = DESIGN_WIDTH * scaleFactor;
+const dynamicHeight = screenHeight / 2.32;
+const dynamicWidth = screenWidth / 1.16;
+const dynamicMarginTop = screenHeight / 10.6;
+const dynamicMarginTop1 = screenHeight / 9.4;
+const dynamicImageHeight = screenHeight / 4.2;
+const dynamicImageWidth = screenWidth / 1.4;
 
 const onboardingData = [
   {
@@ -495,7 +501,7 @@ const onboardingData = [
   },
   {
     key: "2",
-    image: require("../assets/images/secure.png"), // This one needs custom size
+    image: require("../assets/images/secure.png"),
     title: "Secure your money for free and get rewards.",
     description: "Get the most secure payment app ever and enjoy it.",
     indicator: require("../assets/images/Indicator2.png"),
@@ -683,7 +689,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   imageWrapper: {
-    marginTop: 90,
+    marginTop: dynamicMarginTop1,
     alignItems: "center",
   },
   logo: {
@@ -692,16 +698,16 @@ const styles = StyleSheet.create({
   },
   imageList: {
     flexGrow: 0,
-    height: 202,
-    marginTop: 80,
+    height: dynamicImageHeight,
+    marginTop: dynamicMarginTop,
   },
   imageContainer: {
     width: screenWidth,
     alignItems: "center",
   },
   mainImage: {
-    width: 280,
-    height: 202,
+    width: dynamicImageWidth,
+    height: dynamicImageHeight,
   },
   textWrapper: {
     position: "absolute",
@@ -712,8 +718,10 @@ const styles = StyleSheet.create({
   },
   circleContainer: {
     position: "absolute",
-    width: calculatedWidth,
-    height: calculatedHeight,
+    width: dynamicWidth,
+    height: dynamicHeight,
+    // width: 335,
+    // height: 365,
     left: 0,
     bottom: 0,
   },
@@ -802,4 +810,3 @@ const styles = StyleSheet.create({
     bottom: 30,
   },
 });
-

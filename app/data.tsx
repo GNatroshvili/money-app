@@ -201,9 +201,9 @@ import CompleteButton from "@/components/completeButton";
 import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
 import { Stack, useRouter } from "expo-router";
-import React, { useEffect, useRef, useState } from "react"; 
+import React, { useEffect, useRef, useState } from "react";
 import {
-  Animated, 
+  Animated,
   Dimensions,
   Image,
   Keyboard,
@@ -215,17 +215,16 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context"; 
+import { SafeAreaView } from "react-native-safe-area-context";
 import Input from "../components/input";
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get('screen');
+const { width: screenWidth, height: screenHeight } = Dimensions.get("screen");
 
 const dynamicTop = screenHeight / 12.5;
 const dynamicTop1 = screenHeight / 10.1;
 const dynamicMarginTop = screenHeight / 34;
 const dynamicMarginTop2 = screenHeight / 11.3;
-const dynamicMarginTop3 = screenHeight / 3.2; 
-
+const dynamicMarginTop3 = screenHeight / 3.2;
 
 export default function HomeScreen() {
   const [form, setForm] = useState({
@@ -247,7 +246,11 @@ export default function HomeScreen() {
     }
   };
 
-  const updateField = (field: keyof typeof form, value: string, isValid: boolean) => {
+  const updateField = (
+    field: keyof typeof form,
+    value: string,
+    isValid: boolean
+  ) => {
     setForm((prev) => ({
       ...prev,
       [field]: { value, isValid },
@@ -276,7 +279,8 @@ export default function HomeScreen() {
   };
 
   const slideUp = (keyboardHeight: number) => {
-    const offset = Platform.OS === 'ios' ? keyboardHeight * 0.5 : keyboardHeight * 0.8;
+    const offset =
+      Platform.OS === "ios" ? keyboardHeight * 0.7 : keyboardHeight * 0.8;
     Animated.timing(contentTranslateY, {
       toValue: -offset,
       duration: 300,
@@ -294,13 +298,13 @@ export default function HomeScreen() {
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
+      "keyboardDidShow",
       (e) => {
         slideUp(e.endCoordinates.height);
       }
     );
     const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
+      "keyboardDidHide",
       () => {
         slideDown();
       }
@@ -327,10 +331,16 @@ export default function HomeScreen() {
       <StatusBar hidden />
       <Stack.Screen options={{ headerShown: false }} />
 
-      <TouchableWithoutFeedback onPress={dismissKeyboardAndSlideDown} accessible={false}>
+      <TouchableWithoutFeedback
+        onPress={dismissKeyboardAndSlideDown}
+        accessible={false}
+      >
         <SafeAreaView style={styles.safeArea}>
-          <Animated.View 
-            style={[styles.animatedContent, { transform: [{ translateY: contentTranslateY }] }]}
+          <Animated.View
+            style={[
+              styles.animatedContent,
+              { transform: [{ translateY: contentTranslateY }] },
+            ]}
           >
             <View style={styles.leftArrowWrapper}>
               <TouchableOpacity onPress={() => router.push("/verify")}>
@@ -357,7 +367,7 @@ export default function HomeScreen() {
               style={styles.scrollView}
               contentContainerStyle={styles.scrollContent}
               keyboardShouldPersistTaps="handled"
-              keyboardDismissMode="on-drag" 
+              keyboardDismissMode="on-drag"
               showsVerticalScrollIndicator={false}
             >
               <View style={styles.inputWrapper}>
@@ -366,28 +376,36 @@ export default function HomeScreen() {
                   placeholder="Your username"
                   type="text"
                   value={form.username.value}
-                  onChange={(value, isValid) => updateField("username", value, isValid)}
+                  onChange={(value, isValid) =>
+                    updateField("username", value, isValid)
+                  }
                 />
                 <Input
                   label="First Name"
                   placeholder="Your name"
                   type="text"
                   value={form.firstName.value}
-                  onChange={(value, isValid) => updateField("firstName", value, isValid)}
+                  onChange={(value, isValid) =>
+                    updateField("firstName", value, isValid)
+                  }
                 />
                 <Input
                   label="Last Name"
                   placeholder="Your last name"
                   type="text"
                   value={form.lastName.value}
-                  onChange={(value, isValid) => updateField("lastName", value, isValid)}
+                  onChange={(value, isValid) =>
+                    updateField("lastName", value, isValid)
+                  }
                 />
                 <Input
                   label="Date of Birth"
                   placeholder="dd-mm-yyyy"
                   type="date"
                   value={form.dob.value}
-                  onChange={(value, isValid) => updateField("dob", value, isValid)}
+                  onChange={(value, isValid) =>
+                    updateField("dob", value, isValid)
+                  }
                 />
               </View>
             </ScrollView>
@@ -416,7 +434,7 @@ const styles = StyleSheet.create({
   },
   animatedContent: {
     flex: 1,
-    width: '100%',
+    width: "100%",
   },
   leftArrowWrapper: {
     position: "absolute",
@@ -438,12 +456,12 @@ const styles = StyleSheet.create({
     zIndex: 5,
   },
   scrollView: {
-    flex: 1, 
-    marginTop: dynamicMarginTop3, 
+    flex: 1,
+    marginTop: dynamicMarginTop3,
   },
   scrollContent: {
-    flexGrow: 1, 
-    paddingBottom: 150, 
+    flexGrow: 1,
+    paddingBottom: 150,
   },
   inputWrapper: {
     gap: dynamicMarginTop,
@@ -456,7 +474,7 @@ const styles = StyleSheet.create({
     left: 24,
     right: 24,
     alignItems: "center",
-    zIndex: 100, 
-    backgroundColor: 'transparent',
+    zIndex: 100,
+    backgroundColor: "transparent",
   },
 });
