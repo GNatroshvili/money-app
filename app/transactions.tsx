@@ -4,7 +4,7 @@ import SearchInput from '@/components/SearchInput';
 import TransactionCard from '@/components/transactionCard';
 import TransactionCategory from '@/components/transactionCategory';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router'; 
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
     Dimensions,
@@ -33,6 +33,7 @@ const isSmallScreen = screenHeight < 750;
 const dynamicHeight = screenHeight / 3.2;
 const tabMinHeight = screenHeight / 6.6;
 const tabMaxHeight = screenHeight / 1.54;
+const dynamicGap = screenWidth / 5.5;
 
 export default function Transactions() {
     const tabHeight = useSharedValue(tabMinHeight);
@@ -231,7 +232,7 @@ const styles = StyleSheet.create({
     arrowAndTitleWrapper: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        gap: 70,
+        gap: dynamicGap,
         marginLeft: 30,
     },
     dataWrapper: {

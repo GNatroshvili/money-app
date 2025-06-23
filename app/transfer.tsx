@@ -160,12 +160,12 @@ const dynamicHeight = screenHeight / 5.8;
 const dynamicMarginTop = screenHeight / 14.2;
 const dynamicMarginBottom = screenHeight / 42.5;
 const dynamicProfileMarginBottom = screenHeight / 15.2;
+const dynamicGap = screenWidth / 4;
 
 export default function Transfer() {
     const [amount, setAmount] = useState('');
-    const router = useRouter(); // ✅ Added router hook
+    const router = useRouter();
 
-    // Animated value for overall content translation
     const contentTranslateY = useRef(new Animated.Value(0)).current;
 
     const handleNumberPress = (value: string) => {
@@ -175,8 +175,8 @@ export default function Transfer() {
     const handleSend = () => {
         console.log('Sending amount:', amount);
         Keyboard.dismiss();
-        slideDown(); // Slide content back down after sending
-        router.push('/confirmation'); // ✅ Navigate to confirmation
+        slideDown();
+        router.push('/confirmation');
     };
 
     const slideUp = (keyboardHeight: number) => {
@@ -302,6 +302,12 @@ const styles = StyleSheet.create({
         gap: isSmallScreen ? 25 : 50,
         marginTop: 66,
     },
+    arrowAndTitleWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        gap: dynamicGap,
+        marginLeft: 30,
+    },
     arrow: {
         width: 26,
         height: 21,
@@ -311,12 +317,6 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontFamily: 'Inter',
         color: '#FFFFFF',
-    },
-    arrowAndTitleWrapper: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        gap: 70,
-        marginLeft: 30,
     },
     buttonsWrapper: {
         gap: 10,

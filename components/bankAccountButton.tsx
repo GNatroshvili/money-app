@@ -1,13 +1,21 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import {
+  Dimensions,
   Image,
   StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('screen');
+
+const dynamicHeight = screenHeight / 6.8;
+const dynamicImageHeight = screenHeight / 6.8;
+const dynamicImageWidth = screenWidth / 3;
+
 
 type OtpButtonProps = {
   text: string;
@@ -60,11 +68,10 @@ export default function BankAccountButton({
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24,
   },
   button: {
     width: 315,
-    height: 125,
+    height: dynamicHeight,
     borderRadius: 28,
     overflow: "hidden",
   },
@@ -77,7 +84,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 32,
     right: 32,
-    top: 38,
+    // top: 38,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -99,8 +106,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     right: 0,
-    width: 130,
-    height: 125,
+    width: dynamicImageWidth,
+    height: dynamicImageHeight,
     zIndex: 0,
   },
   shadow: {

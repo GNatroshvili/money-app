@@ -489,7 +489,15 @@ const dynamicWidth = screenWidth / 1.16;
 const dynamicMarginTop = screenHeight / 10.6;
 const dynamicMarginTop1 = screenHeight / 9.4;
 const dynamicImageHeight = screenHeight / 4.2;
-const dynamicImageWidth = screenWidth / 1.4;
+const dynamicImageWidth = screenWidth / 1.6;
+const dynamicTitleFont = screenHeight / 34;
+const dynamicTitleLine = screenHeight / 23.6;
+const dynamicDescFont = screenHeight / 47.3;
+const dynamicDescLine = screenHeight / 30.4;
+const dynamicButtonWidth = screenWidth / 2.56;
+const dynamicButtonHeight = screenHeight / 13.3;
+const dynamicMaxWidth = screenWidth / 1.51;
+const dynamicMaxWidth2 = screenWidth / 1.75;
 
 const onboardingData = [
   {
@@ -610,7 +618,7 @@ export default function Onboarding() {
               resizeMode="cover"
               style={[
                 styles.mainImage,
-                item.key === "2" && { width: 187, height: 202 }, // Custom size
+                item.key === "2" && { width: 187, height: 202 },
               ]}
             />
           </View>
@@ -716,12 +724,24 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+  // circleContainer: {
+  //   position: "absolute",
+  //   width: dynamicWidth - 6,
+  //   height: dynamicHeight,
+  //   // width: 335,
+  //   // height: 365,
+  //   left: 0,
+  //   bottom: 0,
+  // },
   circleContainer: {
     position: "absolute",
-    width: dynamicWidth,
+    width:
+      screenHeight < 700
+        ? dynamicWidth - 60
+        : screenHeight < 800
+          ? dynamicWidth - 18
+          : dynamicWidth - 6,
     height: dynamicHeight,
-    // width: 335,
-    // height: 365,
     left: 0,
     bottom: 0,
   },
@@ -739,27 +759,27 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 20,
     top: 65,
-    maxWidth: 298,
+    maxWidth: dynamicMaxWidth,
     fontWeight: "700",
     fontFamily: "Montserrat",
-    fontSize: 25,
-    lineHeight: 36,
+    fontSize: dynamicTitleFont,
+    lineHeight: dynamicTitleLine,
     color: "#2743FD",
   },
   circleDescription: {
     position: "absolute",
     left: 20,
     top: 163,
-    maxWidth: 271,
+    maxWidth: dynamicMaxWidth2,
     fontWeight: "400",
     fontFamily: "Montserrat",
-    fontSize: 18,
-    lineHeight: 28,
+    fontSize: dynamicDescFont,
+    lineHeight: dynamicDescLine,
     color: "#2743FD",
   },
   button: {
-    width: 153,
-    height: 64,
+    width: dynamicButtonWidth,
+    height: dynamicButtonHeight,
     borderRadius: 28,
     overflow: "hidden",
   },
@@ -779,12 +799,13 @@ const styles = StyleSheet.create({
   whiteArrow: {
     width: 24,
     height: 24,
+    zIndex: 2
   },
   signInButton: {
     position: "absolute",
     top: 0,
-    left: 75,
-    width: 80,
+    right: 0,
+    width: 110,
     height: 55,
   },
   shadow: {

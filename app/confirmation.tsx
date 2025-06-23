@@ -22,7 +22,7 @@ const dynamicProfilewidth = screenWidth / 3.2;
 const dynamicGap = screenHeight / 42.6;
 const dynamicMarginTop1 = screenHeight / 10.6;
 const dynamicMarginTop2 = screenHeight / 21.3;
-
+const dynamicGap2 = screenWidth / 5.5;
 
 export default function Confirmation() {
 
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     arrowAndTitleWrapper: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        gap: 70,
+        gap: dynamicGap2,
         marginLeft: 30,
     },
     confirm: {

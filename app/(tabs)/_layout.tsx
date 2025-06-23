@@ -3,15 +3,24 @@ import { Tabs } from "expo-router/tabs";
 import React, { useEffect, useRef } from "react";
 import {
   Animated,
+  Dimensions,
   Image,
   StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  useWindowDimensions,
+  useWindowDimensions
 } from "react-native";
 import { MenuProvider, useMenu } from './context/MenuContext';
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('screen');
+const isSmallScreen = screenHeight < 750;
+
+const dynamicHeight = screenHeight / 7.8;
+const dynamBottom = screenHeight / 29.3;
+
+
 
 export default function RootLayout() {
   return (
@@ -260,8 +269,8 @@ function LayoutContent() {
 const styles = StyleSheet.create({
   tabBar: {
     backgroundColor: "#ffffff",
-    height: 108,
-    paddingTop: 35,
+    height: dynamicHeight,
+    paddingTop: dynamBottom,
   },
   hiddenTabBar: {
     zIndex: -1,

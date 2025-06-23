@@ -832,6 +832,8 @@ const dynamicImageHeight = screenHeight / 5.1;
 const dynamicImageWidth = screenWidth / 1.55;
 const dynamicPaddingVertical = screenHeight / 26.6;
 const dynamicPaddingHorizontal = screenWidth / 12.3;
+const dynamicMarginTop = screenHeight / 32.7;
+const dynamicBottom = screenHeight / 28.4;
 
 export default function Notifications() {
   const { toggleMenu } = useMenu();
@@ -863,8 +865,6 @@ export default function Notifications() {
           <Text style={styles.userNameText}>Good morning Emma,</Text>
         </View>
       </LinearGradient>
-
-      {/* Moved balanceCard outside of gradient */}
       <View style={styles.balanceCard}>
         <View style={styles.firstLine}>
           <Text style={styles.title}>Your total balance</Text>
@@ -978,7 +978,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   graphWrapper: {
-    marginTop: 26,
+    marginTop: dynamicMarginTop,
   },
   graph: {
     width: dynamicImageWidth,
@@ -986,7 +986,7 @@ const styles = StyleSheet.create({
   },
   buttonWrapper: {
     position: "absolute",
-    bottom: 30,
+    bottom: dynamicBottom,
     left: 0,
     right: 0,
     alignItems: "center",
