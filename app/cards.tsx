@@ -1,13 +1,22 @@
 import Slider from '@/components/Slider';
 import TransactionCategory from '@/components/transactionCategory';
 import { ImageSlider } from '@/data/SliderData';
+import { useRouter } from 'expo-router';
 import React from 'react';
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import {
+    Dimensions,
+    Image,
+    Pressable,
+    StyleSheet,
+    Text,
+    View,
+} from 'react-native';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('screen');
 const containerHeight = screenHeight / 3.1;
 
 export default function Cards() {
+    const router = useRouter();
     const gapValue = screenHeight < 800 ? 10 : 20;
     const categoryMarginTop = screenHeight < 800 ? 10 : 20;
     const categoryMarginBottom = screenHeight < 800 ? 16 : 31;
@@ -16,11 +25,13 @@ export default function Cards() {
     return (
         <View style={styles.screen}>
             <View style={[styles.titleWrapper, { top: titleWrapperTop }]}>
-                <Image
-                    source={require("../assets/images/leftArrow.png")}
-                    resizeMode="cover"
-                    style={styles.image}
-                />
+                <Pressable onPress={() => router.push('/wallet')}>
+                    <Image
+                        source={require("../assets/images/leftArrow.png")}
+                        resizeMode="cover"
+                        style={styles.image}
+                    />
+                </Pressable>
                 <Text style={styles.title}>
                     You can check your cards here.
                 </Text>
@@ -38,14 +49,15 @@ export default function Cards() {
                 </Text>
             </View>
 
-            <View style={[
-                styles.categoryWrapper,
-                {
-                    gap: gapValue,
-                    marginTop: categoryMarginTop,
-                    marginBottom: categoryMarginBottom,
-                }
-            ]}>
+            <View
+                style={[
+                    {
+                        gap: gapValue,
+                        marginTop: categoryMarginTop,
+                        marginBottom: categoryMarginBottom,
+                    },
+                ]}
+            >
                 <TransactionCategory
                     title="Shopping"
                     date="15 Mar 2025, 15:00 PM"
@@ -114,8 +126,6 @@ const styles = StyleSheet.create({
         fontFamily: "Montserrat",
         maxWidth: 246,
         marginTop: 32,
-    },
-    categoryWrapper: {
     },
     transactionTitle: {
         fontSize: 22,

@@ -235,9 +235,7 @@ export default function HomeScreen() {
   });
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
   const router = useRouter();
-
   const contentTranslateY = useRef(new Animated.Value(0)).current;
 
   const handleCompletePress = () => {
@@ -342,6 +340,15 @@ export default function HomeScreen() {
               { transform: [{ translateY: contentTranslateY }] },
             ]}
           >
+            {allValid && (
+              <View style={styles.figureWrapper}>
+                <Image
+                  source={require("../assets/images/figure.png")}
+                  resizeMode="contain"
+                  style={styles.figure}
+                />
+              </View>
+            )}
             <View style={styles.leftArrowWrapper}>
               <TouchableOpacity onPress={() => router.push("/verify")}>
                 <Image
@@ -445,6 +452,15 @@ const styles = StyleSheet.create({
   leftArrow: {
     width: 26,
     height: 21,
+  },
+  figureWrapper: {
+    position: "absolute",
+    right: 0,
+    top: 0,
+  },
+  figure: {
+    width: 250,
+    height: 245,
   },
   imageUploader: {
     width: 143,

@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     circle: {
         position: "absolute",
         top: -5,
-        left: 0,
+        left: -3,
         width: 120,
         height: 92
     },

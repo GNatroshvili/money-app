@@ -109,8 +109,9 @@ type OtpButtonProps = {
   text: string;
   onPress?: () => void;
   disabled?: boolean;
-  textColor?: string; // new prop
-  useBlueMark?: boolean; // new prop
+  textColor?: string;
+  useBlueMark?: boolean;
+  border?: boolean;
 };
 
 export default function CompleteButton({
@@ -119,13 +120,17 @@ export default function CompleteButton({
   disabled = false,
   textColor = "#C8C8C8",
   useBlueMark = false,
+  border = false,
 }: OtpButtonProps) {
   return (
     <View style={styles.container}>
       <StatusBar hidden />
-
       <TouchableOpacity
-        style={[styles.button, styles.shadow]}
+        style={[
+          styles.button,
+          styles.shadow,
+          border && styles.borderStyle,
+        ]}
         onPress={onPress}
         disabled={disabled}
         activeOpacity={disabled ? 1 : 0.7}
@@ -153,14 +158,17 @@ export default function CompleteButton({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // paddingHorizontal: 24,
-  },
+  container: {},
   button: {
     width: 315,
     height: 72,
     borderRadius: 28,
     overflow: "hidden",
+  },
+  borderStyle: {
+    borderWidth: 1,
+    borderColor: "#2743FD",
+    borderRadius: 28,
   },
   buttonInner: {
     flex: 1,
@@ -190,13 +198,13 @@ const styles = StyleSheet.create({
     borderRadius: 28,
   },
   shadow: {
-    shadowColor: "#1B39FF33",
+    shadowColor: "#1B39FF",
     shadowOffset: {
       width: 0,
       height: 8,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
+    shadowOpacity: 0.1,
+    shadowRadius: 16,
     elevation: 8,
   },
 });

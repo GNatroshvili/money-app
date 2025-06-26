@@ -2,10 +2,12 @@ import CompleteButton from '@/components/completeButton';
 import ConfirmationAlert from '@/components/confirmationAlert';
 import OtpButton from '@/components/otpButton';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import {
     Dimensions,
     Image,
+    Pressable,
     StyleSheet,
     Text,
     View
@@ -25,6 +27,7 @@ const dynamicMarginTop2 = screenHeight / 21.3;
 const dynamicGap2 = screenWidth / 5.5;
 
 export default function Confirmation() {
+    const router = useRouter();
 
     return (
         <View style={styles.container}>
@@ -36,11 +39,13 @@ export default function Confirmation() {
             >
                 <View style={styles.headerWrapper}>
                     <View style={styles.arrowAndTitleWrapper}>
-                        <Image
-                            source={require('../assets/images/leftArrow.png')}
-                            resizeMode="contain"
-                            style={styles.arrow}
-                        />
+                        <Pressable onPress={() => router.push('/transfer')}>
+                            <Image
+                                source={require('../assets/images/leftArrow.png')}
+                                resizeMode="contain"
+                                style={styles.arrow}
+                            />
+                        </Pressable>
                         <Text style={styles.title}>Transaction</Text>
                     </View>
                 </View>
@@ -69,10 +74,9 @@ export default function Confirmation() {
                     disabled={false}
                     textColor={true ? "#2743FD" : "#C8C8C8"}
                     useBlueMark={true}
+                    border={true}
                 />
-
             </View>
-
         </View>
     );
 }

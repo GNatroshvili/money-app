@@ -147,6 +147,7 @@ import {
     Dimensions,
     Image,
     Keyboard,
+    Pressable,
     StyleSheet,
     Text,
     TouchableWithoutFeedback,
@@ -235,11 +236,13 @@ export default function Transfer() {
                     >
                         <View style={styles.headerWrapper}>
                             <View style={styles.arrowAndTitleWrapper}>
-                                <Image
-                                    source={require('../assets/images/leftArrow.png')}
-                                    resizeMode="contain"
-                                    style={styles.arrow}
-                                />
+                                <Pressable onPress={() => router.push('/transactions')}>
+                                    <Image
+                                        source={require('../assets/images/leftArrow.png')}
+                                        resizeMode="contain"
+                                        style={styles.arrow}
+                                    />
+                                </Pressable>
                                 <Text style={styles.title}>Transfer</Text>
                             </View>
                         </View>
