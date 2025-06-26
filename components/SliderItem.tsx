@@ -103,13 +103,20 @@
 
 import { ImageSliderType } from '@/data/SliderData';
 import React from 'react';
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import Animated, {
-    Extrapolation,
-    interpolate,
-    SharedValue,
-    useAnimatedStyle,
+  Extrapolation,
+  interpolate,
+  SharedValue,
+  useAnimatedStyle,
 } from 'react-native-reanimated';
+import RadialGradientBackground from './RadialGradientBackground';
 
 type Props = {
   item: ImageSliderType;
@@ -120,6 +127,7 @@ type Props = {
 const { width } = Dimensions.get('window');
 const { height: screenHeight } = Dimensions.get('screen');
 const cardHeight = screenHeight / 3.1;
+const cardWidth = 209;
 
 const SliderItem = ({ item, index, scrollX }: Props) => {
   const rnAnimatedStyle = useAnimatedStyle(() => {
@@ -145,33 +153,39 @@ const SliderItem = ({ item, index, scrollX }: Props) => {
     };
   });
 
+  const itemWrapperBackgroundColor = index === 0 ? 'transparent' : (item.backgroundColor || '#fff');
+
   return (
     <Animated.View style={[styles.container, rnAnimatedStyle]}>
-      <View
-        style={[
-          styles.itemWrapper,
-          { backgroundColor: item.backgroundColor || '#fff' },
-        ]}
-      >
-        <View>
-          <Text style={[styles.balance, { color: item.color || '#fff' }]}>
-            {item.balance}
-          </Text>
-          <Text style={[styles.title, { color: item.color || '#fff' }]}>
-            {item.title}
-          </Text>
-        </View>
-        <View style={styles.downWrapper}>
+      <View style={styles.cardContainer}>
+        {index === 0 && <RadialGradientBackground />}
+
+        <View
+          style={[
+            styles.itemWrapper,
+            { backgroundColor: itemWrapperBackgroundColor },
+          ]}
+        >
           <View>
-            <Text style={[styles.expire, { color: item.color || '#fff' }]}>
-              {item.expire}
+            <Text style={[styles.balance, { color: item.color || '#fff' }]}>
+              {item.balance}
             </Text>
-            <Text style={[styles.number, { color: item.color || '#fff' }]}>
-              {item.number}
+            <Text style={[styles.title, { color: item.color || '#fff' }]}>
+              {item.title}
             </Text>
           </View>
-          <View>
-            <Image style={styles.icon} source={item.icon} />
+          <View style={styles.downWrapper}>
+            <View>
+              <Text style={[styles.expire, { color: item.color || '#fff' }]}>
+                {item.expire}
+              </Text>
+              <Text style={[styles.number, { color: item.color || '#fff' }]}>
+                {item.number}
+              </Text>
+            </View>
+            <View>
+              <Image style={styles.icon} source={item.icon} />
+            </View>
           </View>
         </View>
       </View>
@@ -186,21 +200,14 @@ const styles = StyleSheet.create({
     width: width - 30,
     alignItems: 'center',
   },
-  title: {
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  itemWrapper: {
-    width: 209,
+  cardContainer: {
+    width: cardWidth,
     height: cardHeight,
     borderRadius: 25,
-    paddingBottom: 32,
-    paddingTop: 32,
-    paddingLeft: 20,
-    paddingRight: 20,
-    justifyContent: 'space-between',
-
-    // iOS shadow
+    overflow: 'hidden',
+    position: 'relative',
+    
+    // iOS shadow for the whole card effect
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -209,11 +216,25 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.11,
     shadowRadius: 25,
 
-    // Android shadow
+    // Android shadow for the whole card effect
     elevation: 10,
+  },
+  itemWrapper: {
+    flex: 1, 
+    borderRadius: 25, 
+    paddingBottom: 32,
+    paddingTop: 32,
+    paddingLeft: 20,
+    paddingRight: 20,
+    justifyContent: 'space-between',
+    zIndex: 1, 
   },
   balance: {
     fontSize: 24,
+    fontWeight: '700',
+  },
+  title: {
+    fontSize: 16,
     fontWeight: '700',
   },
   expire: {
